@@ -28,7 +28,7 @@ $ docker run --rm -d -p 9042:9042 -v /root/data/cassandra:/var/lib/cassandra --n
 
 $ docker exec -it cassandra0 cqlsh
 ...
-cqlsh> CREATE KEYSPACE todo1
+cqlsh> CREATE KEYSPACE todo
 WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 1};
 ```
 
