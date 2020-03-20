@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ToDo App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+    <h2>Todo list:</h2>
+
+    <form action="#" th:action="@{/add}" th:object="${task}" method="post">
+        <textarea th:field="*{content}" />
+        <input type="submit" value="Submit" />
+    </form>
+
+    <ul>
+        <li th:each="task : ${tasks}"><p th:text="${task.content} + ' - ' + ${task.status}"></p> <a href="/delete" th:href="@{/delete(id=${task.id})}">Delete</a> <a href="/complete" th:href="@{/complete(id=${task.id})}">Mark as Completed</a></li>
+    </ul>
+    
+</body>
+</html>

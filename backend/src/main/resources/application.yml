@@ -1,0 +1,11 @@
+server:
+  port: ${PORT:8081}
+
+spring:
+  data:    
+    cassandra:
+      # cluster-name: Demo
+      keyspace-name: todo
+      contact-points: ${CASSANDRA_HOST:192.168.56.107}
+      port: 9042
+      schema-action: create_if_not_exists
