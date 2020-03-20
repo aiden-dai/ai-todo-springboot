@@ -9,8 +9,6 @@ RUN mvn -Dmaven.test.skip=true package
 
 FROM openjdk:8-jdk-alpine
 ENV PORT 8080
-ENV TASK_API_HOST taskapi
-ENV TASK_API_PORT 8080
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar"]

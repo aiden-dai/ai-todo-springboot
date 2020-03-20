@@ -1,7 +1,13 @@
 server:
-    port: ${PORT:8082}
+  port: ${PORT:8082}
 
+spring:
+  application:
+    name: taskApp
 
-backend:
-    host: ${TASK_API_HOST:192.168.56.107}
-    port: ${TASK_API_PORT:8081}
+  cloud:
+    consul:
+      host: 192.168.56.107
+      port: 8500
+      discovery:
+        register: false

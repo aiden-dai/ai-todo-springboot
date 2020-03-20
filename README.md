@@ -1,5 +1,23 @@
 # ai-todo-springboot
-ToDo app built via Springboot
+Sample ToDo app built via Springboot + Cassandra. Current Springboot Version is 2.2.5.RELEASE
+
+Major Features:
+- Microservice Design
+- Service Registry and Discovery via Consul
+- All in docker
+
+
+## Start Consul
+
+Start Consul in docker
+```bash
+docker run \
+ -d \
+ -p 8500:8500 \
+ -p 8600:8600/udp \
+ --name=consul \
+ consul agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0
+```
 
 
 ## Start Cassandra
@@ -20,34 +38,45 @@ WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 1};
 
 ## Run backend in Docker
 
-Build the image
+Build the backend image
 ```
 docker build --rm -f "backend/Dockerfile" -t sp-task:latest "backend"
 ```
 
-Start the backend
+Start the backend api
 ```
-docker run --name taskapi --rm -p 8081:8080 --link cassandra0:cassandra sp-task:latest
-
+docker run -d --name taskapi --rm -p 8081:8080 --link cassandra0:cassandra sp-task:latest
 ```
 
 Try rest api
 ```
-curl -i -X GET localhost:8081/api/products
+$ curl -i -X GET localhost:8081/api
+HTTP/1.1 200 
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Fri, 20 Mar 2020 11:58:10 GMT
+
+{"status":"Success","message":""}
+```
+
+Check Consul Services, you should see TaskAPI service in the list.
+```
+$ curl http://localhost:8500/v1/catalog/services
+{"consul":[],"taskAPI":["secure=false"]}
 ```
 
 
 
 ## Run frontend in Docker
 
-Build the image
+Build the front image
 ```
 docker build --rm -f "frontend/Dockerfile" -t sp-todo:latest "frontend"
 ```
 
 Start the frontend
 ```
-docker run --name todo --rm -p 8082:8080 --link taskapi:taskapi sp-todo:latest
+docker run -d --name todo --rm -p 8082:8080 sp-todo:latest
 ```
 
 Visit the Web UI `http://localhost:8082` to check.

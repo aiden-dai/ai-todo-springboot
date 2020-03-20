@@ -9,3 +9,16 @@ spring:
       contact-points: ${CASSANDRA_HOST:192.168.56.107}
       port: 9042
       schema-action: create_if_not_exists
+
+  application:
+    name: taskApp
+
+  cloud:
+    consul:
+      host: 192.168.56.107
+      port: 8500
+      discovery:
+        hostname: 192.168.56.107
+        port: 8081
+        serviceName: taskAPI
+        instance-id: ${spring.application.name}:${random.value}
