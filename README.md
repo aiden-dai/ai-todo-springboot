@@ -11,7 +11,7 @@ Major Features:
 
 Start Consul in docker
 ```bash
-docker run \
+$ docker run \
  -d \
  -p 8500:8500 \
  -p 8600:8600/udp \
@@ -24,13 +24,10 @@ docker run \
 
 Start cassandra in docker and create keyspace
 ```bash
-docker run --rm -d -p 9042:9042 -v /root/data/cassandra:/var/lib/cassandra --name cassandra0 cassandra
+$ docker run --rm -d -p 9042:9042 -v /root/data/cassandra:/var/lib/cassandra --name cassandra0 cassandra
 
-docker exec -it cassandra0 cqlsh
-
-Connected to Test Cluster at 127.0.0.1:9042.
-[cqlsh 5.0.1 | Cassandra 3.11.6 | CQL spec 3.4.4 | Native protocol v4]
-Use HELP for help.
+$ docker exec -it cassandra0 cqlsh
+...
 cqlsh> CREATE KEYSPACE todo1
 WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 1};
 ```
@@ -40,12 +37,12 @@ WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 1};
 
 Build the backend image
 ```
-docker build --rm -f "backend/Dockerfile" -t sp-task:latest "backend"
+$ docker build --rm -f "backend/Dockerfile" -t sp-task:latest "backend"
 ```
 
 Start the backend api
 ```
-docker run -d --name taskapi --rm -p 8081:8080 --link cassandra0:cassandra sp-task:latest
+$ docker run -d --name taskapi --rm -p 8081:8080 --link cassandra0:cassandra sp-task:latest
 ```
 
 Try rest api
@@ -71,12 +68,12 @@ $ curl http://localhost:8500/v1/catalog/services
 
 Build the front image
 ```
-docker build --rm -f "frontend/Dockerfile" -t sp-todo:latest "frontend"
+$ docker build --rm -f "frontend/Dockerfile" -t sp-todo:latest "frontend"
 ```
 
 Start the frontend
 ```
-docker run -d --name todo --rm -p 8082:8080 sp-todo:latest
+$ docker run -d --name todo --rm -p 8082:8080 sp-todo:latest
 ```
 
 Visit the Web UI `http://localhost:8082` to check.
