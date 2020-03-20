@@ -15,10 +15,9 @@ spring:
 
   cloud:
     consul:
-      host: 192.168.56.107
+      host: ${CONSUL_HOST:192.168.56.107}
       port: 8500
       discovery:
-        hostname: 192.168.56.107
-        port: 8081
         serviceName: taskAPI
         instance-id: ${spring.application.name}:${random.value}
+        prefer-ip-address: true
