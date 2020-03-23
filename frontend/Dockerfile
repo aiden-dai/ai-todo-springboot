@@ -1,5 +1,5 @@
 # Build Env
-FROM maven:3-jdk-8 AS build
+FROM maven:3.6-jdk-8-slim AS build
 WORKDIR /app
 COPY pom.xml ./
 RUN mvn verify --fail-never
